@@ -33,7 +33,9 @@ License: configure
  gives unlimited permission to copy, distribute and modify it.
 
 Files: debian/*
-Copyright: 2014 Aaron Zauner <azet@azet.org>
+Copyright:
+  2014 Aaron Zauner <azet@azet.org>
+  2017 Scibian Project <legal@scibian.org>
 License: MIT
 
 License: MIT
