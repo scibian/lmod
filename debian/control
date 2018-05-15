@@ -2,7 +2,7 @@ Source: lmod
 Section: devel
 Priority: optional
 Maintainer: Scibian Project <packaging@scibian.org>
-Build-Depends: debhelper (>= 9), autotools-dev, lua5.2, lua-filesystem, lua-posix, lua-term, lua-json, tcl
+Build-Depends: debhelper (>= 9), autotools-dev, procps, lua5.2, lua-filesystem, lua-posix, lua-term, lua-json, tcl
 Standards-Version: 3.9.6
 Homepage: https://www.tacc.utexas.edu/tacc-projects/lmod
 Vcs-Git: https://github.com/scibian/lmod.git
