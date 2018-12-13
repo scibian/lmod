@@ -1,0 +1,56 @@
+Description: Ignore build time LD_LIBRARY_PATH/LD_PRELOAD
+ For a reason I do not understand, Lmod extracts the LD_LIBRARY_PATH and
+ LD_PRELOAD environment variables defined at build time, and set them at
+ runtime. This is probably a feature that makes sens for upstream developers
+ but it has a bad side effect on Scibian HPC clusters. The build environments
+ generally have libeatmydata in LD_LIBRARY_PATH for speeding I/O up but it is
+ really not wanted in runtime environment. This patch ensures these environment
+ variables are ignored at build time.
+Author: Rémi Palancher <remi-externe.palancher@edf.fr>
+Forwarded: no
+Last-Update: 2018-12-13
+
+diff --git a/settarg/getUname.lua b/settarg/getUname.lua
+index 003be75..51f5b54 100644
+--- a/settarg/getUname.lua
++++ b/settarg/getUname.lua
+@@ -39,7 +39,7 @@ local posix = require("posix")
+ 
+ local getenv = os.getenv
+ 
+-LMOD_LD_LIBRARY_PATH = "@sys_ld_lib_path@"
++LMOD_LD_LIBRARY_PATH = ""
+ if (LMOD_LD_LIBRARY_PATH:sub(1,1) == "@") then
+    LMOD_LD_LIBRARY_PATH = getenv("LD_LIBRARY_PATH")
+ end
+@@ -51,7 +51,7 @@ end
+ -- LMOD_LD_PRELOAD:   LD_PRELOAD found at configure
+ ------------------------------------------------------------------------
+ 
+-LMOD_LD_PRELOAD = "@sys_ld_preload@"
++LMOD_LD_PRELOAD = ""
+ if (LMOD_LD_PRELOAD:sub(1,1) == "@") then
+    LMOD_LD_PRELOAD = getenv("LD_PRELOAD")
+ end
+diff --git a/src/myGlobals.lua b/src/myGlobals.lua
+index 059f8e7..4f629d3 100644
+--- a/src/myGlobals.lua
++++ b/src/myGlobals.lua
+@@ -335,7 +335,7 @@ end
+ -- LMOD_LD_LIBRARY_PATH:   LD_LIBRARY_PATH found at configure
+ ------------------------------------------------------------------------
+ 
+-LMOD_LD_LIBRARY_PATH = "@sys_ld_lib_path@"
++LMOD_LD_LIBRARY_PATH = ""
+ if (LMOD_LD_LIBRARY_PATH:sub(1,1) == "@") then
+    LMOD_LD_LIBRARY_PATH = getenv("LD_LIBRARY_PATH")
+ end
+@@ -347,7 +347,7 @@ end
+ -- LMOD_LD_PRELOAD:   LD_PRELOAD found at configure
+ ------------------------------------------------------------------------
+ 
+-LMOD_LD_PRELOAD = "@sys_ld_preload@"
++LMOD_LD_PRELOAD = ""
+ if (LMOD_LD_PRELOAD:sub(1,1) == "@") then
+    LMOD_LD_PRELOAD = getenv("LD_PRELOAD")
+ end
