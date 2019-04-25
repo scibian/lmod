@@ -1,3 +1,9 @@
+lmod (6.6-0.2sci9u3) scibian9; urgency=medium
+
+  * Add patch to fix modulecmd symlink issue 
+
+ -- Benoit Boccard <benoit-externe.boccard@edf.fr>  Thu, 25 Apr 2019 16:03:25 +0200
+
 lmod (6.6-0.2sci9u2) scibian9; urgency=medium
 
   * Add patch to ignore build time envs
