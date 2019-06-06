@@ -1,4 +1,4 @@
-lmod (6.6-0.2sci8u2) unstable; urgency=medium
+lmod (6.6-0.2sci8u2) scibian8; urgency=medium
 
   * Add patch to activate module tracking usage
 
