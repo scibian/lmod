@@ -1,0 +1,35 @@
+--- a/src/SitePackage.lua
++++ b/src/SitePackage.lua
+@@ -103,3 +103,32 @@ require("strict")
+ --  function as "module_requires_group".  The key is the name used in the modulefile and
+ --  the right is what the function is called in SitePackage.lua.  The names can be the
+ --  same.
++
++-- Implementation begin: module usage tracking
++--
++--
++local uname   = require("posix").uname
++
++function log_module_load(t)
++  if (mode() ~= "load") then return end
++  local user = os.getenv("LOGNAME")
++  local current_time = epoch()
++  local host = uname("%n")
++  local msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=load, module=%s, path=%s",
++                             current_time, host, user, t.modFullName, t.fn)
++  os.execute("logger -t lmod " .. msg)
++end
++
++function log_module_unload(t)
++  if (mode() ~= "unload") then return end
++  local user = os.getenv("LOGNAME")
++  local current_time = epoch()
++  local host = uname("%n")
++  local msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=unload, module=%s, path=%s",
++                             current_time, host, user, t.modFullName, t.fn)
++  os.execute("logger -t lmod " .. msg)
++end
++
++local hook = require("Hook")
++hook.register("load", log_module_load)
++hook.register("unload", log_module_unload)
