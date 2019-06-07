@@ -1,6 +1,12 @@
+lmod (6.6-0.2sci9u4) scibian9; urgency=medium
+
+  * Add patch to activate module tracking usage
+
+ -- Eduardo Rothe <eduardo-externe.rothe@edf.fr>  Fri, 07 Jun 2019 10:45:24 +0200
+
 lmod (6.6-0.2sci9u3) scibian9; urgency=medium
 
-  * Add patch to fix modulecmd symlink issue 
+  * Add patch to fix modulecmd symlink issue
 
  -- Benoit Boccard <benoit-externe.boccard@edf.fr>  Thu, 25 Apr 2019 16:03:25 +0200
 
