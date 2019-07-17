@@ -1,3 +1,9 @@
+lmod (6.6-0.2sci8u3) scibian8; urgency=medium
+
+  * Add patch to fix modulecmd symlink issue
+
+ -- Eduardo Rothe <eduardo-externe.rothe@edf.fr>  Wed, 17 Jul 2019 12:19:02 +0200
+
 lmod (6.6-0.2sci8u2) scibian8; urgency=medium
 
   * Add patch to activate module tracking usage
