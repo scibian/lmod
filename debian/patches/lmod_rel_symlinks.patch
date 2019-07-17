@@ -1,0 +1,24 @@
+--- a/src/lmod.in.lua	2017-01-10 12:08:16.060881366 +0100
++++ b/src/lmod.in.lua	2017-01-10 14:44:46.161030655 +0100
+@@ -64,10 +64,20 @@
+ local posix    = require("posix")
+ local readlink = posix.readlink
+ local stat     = posix.stat
++local realpath = posix.realpath
++local dirname  = posix.dirname
+ 
+ local st       = stat(arg_0)
+ while (st.type == "link") do
+-   arg_0 = readlink(arg_0)
++   local link_dst = readlink(arg_0)
++   if (link_dst:sub(1,1) ~= "/") then
++      -- If the link target is a relative path, resolve the absolute path with
++      -- realpath() the dirname of the source concatenated with the relative
++      -- link. Without this logic, the following stat would fail.
++      local src_dir = dirname(arg_0)
++      link_dst = realpath(src_dir.."/"..link_dst)
++   end
++   arg_0 = link_dst
+    st    = stat(arg_0)
+ end
+ 
