@@ -1,3 +1,14 @@
+lmod (6.6-0.2sci8u4) scibian8; urgency=medium
+
+  * Replaces and updates old module tracking usage patch
+
+	Three new fields ar now sent to syslog:
+	  -job_id
+	  -job_acount
+	  -job_partition
+
+ -- Eduardo Rothe <eduardo-externe.rothe@edf.fr>  Mon, 30 Dec 2019 14:09:08 +0100
+
 lmod (6.6-0.2sci8u3) scibian8; urgency=medium
 
   * Add patch to fix modulecmd symlink issue
