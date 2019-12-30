@@ -1,5 +1,4 @@
 module_usage_tracking
+lmod_rel_symlinks.patch
 change_paths
 set_modulespath
-ignore_build-time_paths
-lmod_rel_symlinks.patch

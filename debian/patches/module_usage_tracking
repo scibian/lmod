@@ -1,6 +1,14 @@
 --- a/src/SitePackage.lua
 +++ b/src/SitePackage.lua
-@@ -103,3 +103,32 @@ require("strict")
+@@ -3,6 +3,7 @@
+ -- @module SitePackage
+ 
+ require("strict")
++require("io")
+ 
+ 
+ --------------------------------------------------------------------------------
+@@ -103,3 +104,62 @@ require("strict")
  --  function as "module_requires_group".  The key is the name used in the modulefile and
  --  the right is what the function is called in SitePackage.lua.  The names can be the
  --  same.
@@ -12,21 +20,51 @@
 +
 +function log_module_load(t)
 +  if (mode() ~= "load") then return end
++
 +  local user = os.getenv("LOGNAME")
 +  local current_time = epoch()
 +  local host = uname("%n")
-+  local msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=load, module=%s, path=%s",
-+                             current_time, host, user, t.modFullName, t.fn)
++
++  local slurm_job_id = os.getenv("SLURM_JOB_ID")
++  local slurm_job_account = ""
++  local slurm_job_partition = ""
++
++  local msg = ""
++  if slurm_job_id == nil then
++    msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=load, module=%s, path=%s, cat=%s, version=%s, shell=%s, job_id=0, job_acc=empty, job_part=empty",
++                         current_time, host, user, myModuleFullName(), myFileName(), myModuleName(), myModuleVersion(), myShellName())
++  else
++    slurm_job_account = os.getenv("SLURM_JOB_ACCOUNT")
++    slurm_job_partition = os.getenv("SLURM_JOB_PARTITION")
++    msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=load, module=%s, path=%s, cat=%s, version=%s, shell=%s, job_id=%s, job_acc=%s, job_part=%s",
++                         current_time, host, user, myModuleFullName(), myFileName(), myModuleName(), myModuleVersion(), myShellName(), slurm_job_id, slurm_job_account, slurm_job_partition)
++  end
++
 +  os.execute("logger -t lmod " .. msg)
 +end
 +
 +function log_module_unload(t)
 +  if (mode() ~= "unload") then return end
++
 +  local user = os.getenv("LOGNAME")
 +  local current_time = epoch()
 +  local host = uname("%n")
-+  local msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=unload, module=%s, path=%s",
-+                             current_time, host, user, t.modFullName, t.fn)
++
++  local slurm_job_id = os.getenv("SLURM_JOB_ID")
++  local slurm_job_account = ""
++  local slurm_job_partition = ""
++
++  local msg = ""
++  if slurm_job_id == nil then
++    msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=unload, module=%s, path=%s, cat=%s, version=%s, shell=%s, job_id=0, job_acc=empty, job_part=empty",
++                         current_time, host, user, myModuleFullName(), myFileName(), myModuleName(), myModuleVersion(), myShellName())
++  else
++    slurm_job_account = os.getenv("SLURM_JOB_ACCOUNT")
++    slurm_job_partition = os.getenv("SLURM_JOB_PARTITION")
++    msg = string.format("source=ModUsageTrack, time=%f, host=%s, user=%s, action=unload, module=%s, path=%s, cat=%s, version=%s, shell=%s, job_id=%s, job_acc=%s, job_part=%s",
++                         current_time, host, user, myModuleFullName(), myFileName(), myModuleName(), myModuleVersion(), myShellName(), slurm_job_id, slurm_job_account, slurm_job_partition)
++  end
++
 +  os.execute("logger -t lmod " .. msg)
 +end
 +
