@@ -1,3 +1,12 @@
+lmod (6.6-0.2sci9u5) scibian9; urgency=medium
+
+  * Replaces and updates old module tracking usage patch
+
+	Three new fields are now sent to syslog:
+	  - job_id, job_account and job_partition.
+
+ -- Eduardo Rothe <eduardo-externe.rothe@edf.fr>  Mon, 30 Dec 2019 15:28:05 +0100
+
 lmod (6.6-0.2sci9u4) scibian9; urgency=medium
 
   * Add patch to activate module tracking usage
