@@ -1,3 +1,9 @@
+lmod (6.6-0.2sci10u1) scibian10; urgency=medium
+
+  * New release for scibian10
+
+ -- MHamed Bouaziz <mhamed-externe.bouaziz@edf.fr>  Thu, 30 Jan 2020 14:54:08 +0100
+
 lmod (6.6-0.2sci9u5) scibian9; urgency=medium
 
   * Replaces and updates old module tracking usage patch
